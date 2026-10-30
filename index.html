@@ -46,10 +46,17 @@ button{font:inherit;color:inherit}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold-lt);outline-offset:3px;border-radius:6px}
 
-@keyframes shimmer{0%{background-position:120% 0}100%{background-position:-120% 0}}
+/* Ocultar marcas de Netlify */
+[class*="netlify"], [id*="netlify"], .nl-badge, .badge, [data-netlify] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ---------- SOBRE (Optimizado sin titileo para celular) ---------- */
+/* ---------- SOBRE (Estabilizado sin titileo) ---------- */
 #intro{
   position:fixed;inset:0;z-index:50;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
@@ -58,6 +65,8 @@ a{color:inherit}
   padding-right:max(16px, env(safe-area-inset-right, 0px));
   background:radial-gradient(120% 90% at 50% 0%, var(--night-2), var(--night) 70%);
   transition:opacity 1s ease 4s, visibility 0s linear 5s;
+  -webkit-transform:translate3d(0,0,0);
+  transform:translate3d(0,0,0);
   -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
 }
@@ -66,7 +75,7 @@ a{color:inherit}
 .intro-title{
   font-family:var(--f-script);font-size:clamp(40px,12vw,56px);line-height:1.05;text-align:center;
   color:var(--gold-hi);
-  filter:drop-shadow(0 0 16px rgba(235,213,162,.4));transition:opacity .4s ease;
+  transition:opacity .4s ease;
 }
 .intro-hint{font-family:var(--f-display);font-style:italic;font-size:19px;color:var(--gold-lt);text-align:center;transition:opacity .4s}
 #intro.open .intro-hint,#intro.open .intro-eyebrow,#intro.open .intro-title{opacity:0}
@@ -75,8 +84,8 @@ a{color:inherit}
   position:relative;width:min(340px, 84vw);aspect-ratio:3/2;max-width:100%;
   perspective:1200px;
   cursor:pointer;
-  transform:translateZ(0);
-  -webkit-transform:translateZ(0);
+  -webkit-transform:translate3d(0,0,0);
+  transform:translate3d(0,0,0);
   -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
 }
@@ -112,6 +121,19 @@ a{color:inherit}
 .seal::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px solid rgba(110,82,43,.55);box-shadow:0 0 0 1px rgba(255,240,205,.25) inset}
 .seal span{font-family:var(--f-display);font-weight:600;font-size:26px;letter-spacing:.04em;color:#6A4E27;text-shadow:0 1px 0 rgba(255,236,190,.55)}
 .envelope.open .seal{transform:scale(1.25);opacity:0;pointer-events:none}
+
+/* Ajustes anti-titileo para móviles */
+@media (max-width: 768px) {
+  #intro, .envelope, .env-front, .env-back, .env-flap, .seal {
+    -webkit-transform: translate3d(0,0,0) !important;
+    transform: translate3d(0,0,0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    will-change: transform, opacity;
+  }
+}
 
 /* ---------- LIBRO ---------- */
 #stage{
